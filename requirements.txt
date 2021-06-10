@@ -1,5 +1,0 @@
-rasa
-rasa_core
-rasa_core_sdk
-requests
-spacy
