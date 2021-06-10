@@ -1,0 +1,109 @@
+version: "2.0"
+
+stories:
+
+- story: get temperature first try
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: temperature
+  - action: location_form
+  - active_loop: location_form
+  - slot_was_set:
+    - location: Delhi
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_temperature
+  - action: utter_temperature_did_that_help
+  - intent: affirm
+  - action: utter_temperature_helped
+  - action: utter_goodbye
+
+
+- story: get temperature second try
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: temperature
+  - action: location_form
+  - active_loop: location_form
+  - slot_was_set:
+    - location: Delhi
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_temperature
+  - action: utter_temperature_did_that_help
+  - intent: deny
+  - action: utter_temperature_didnt_help
+  - intent: temperature
+  - action: location_form
+  - active_loop: location_form
+  - slot_was_set:
+    - location: Delhi
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_temperature
+  - action: utter_temperature_did_that_help
+  - intent: affirm
+  - action: utter_temperature_helped
+  - action: utter_goodbye
+
+
+- story: get temperature second try fail
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: temperature
+  - action: location_form
+  - active_loop: location_form
+  - slot_was_set:
+    - location: Delhi
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_temperature
+  - action: utter_temperature_did_that_help
+  - intent: deny
+  - action: utter_temperature_didnt_help
+  - intent: temperature
+  - action: location_form
+  - active_loop: location_form
+  - slot_was_set:
+    - location: Delhi
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_temperature
+  - action: utter_temperature_did_that_help
+  - intent: deny
+  - action: utter_temperature_didnt_help_2
+  - action: utter_goodbye
+
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: greet
+  - action: utter_greet
+  - intent: temperature
+    entities:
+    - location: london
+  - slot_was_set:
+    - location: london
+  - action: location_form
+  - active_loop: location_form
+  - slot_was_set:
+    - location: london
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_get_temperature
+  - slot_was_set:
+    - location: 73.05
+  - action: utter_temperature_did_that_help
+  - intent: affirm
+  - action: utter_temperature_helped
+  - action: utter_goodbye

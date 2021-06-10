@@ -1,0 +1,73 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- temperature:
+    influence_conversation: true
+- greet:
+    influence_conversation: true
+    use_entities: []
+- affirm:
+    influence_conversation: true
+    use_entities: []
+- goodbye:
+    influence_conversation: true
+    use_entities: []
+- bot_challenge:
+    influence_conversation: true
+    use_entities: []
+- deny:
+    influence_conversation: true
+    use_entities: []
+- about:
+    influence_conversation: true
+    use_entities: []
+- test:
+    influence_conversation: true
+entities:
+- location
+slots:
+  location:
+    type: text
+    influence_conversation: true
+responses:
+  utter_greet:
+  - text: Hey! How are you?
+  - text: Hi!
+  - text: Hey! How can I help you?
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_about:
+  - text: You can ask me to get the temperature for any location!
+  utter_temperature_did_that_help:
+  - buttons:
+    - payload: /affirm
+      title: Yes
+    - payload: /deny
+      title: No
+    text: Did that help you?
+  utter_temperature_helped:
+  - text: Great!
+  utter_temperature_didnt_help:
+  - text: Did I read the wrong location? How about we try again, where do you want the temperature for?
+  utter_temperature_didnt_help_2:
+  - text: Sorry, I can't understand what location you're providing.
+actions:
+- action_get_temperature
+- utter_greet
+- utter_goodbye
+- utter_iamabot
+- utter_about
+- utter_temperature_did_that_help
+- utter_temperature_helped
+- utter_temperature_didnt_help
+- utter_temperature_didnt_help_2
+forms:
+  location_form:
+    required_slots:
+      location:
+      - type: from_entity
+        entity: location

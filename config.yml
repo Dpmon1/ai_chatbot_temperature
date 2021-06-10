@@ -1,0 +1,45 @@
+# Configuration for Rasa NLU.
+# https://rasa.com/docs/rasa/nlu/components/
+
+language: en
+
+pipeline:
+  # Language model
+
+  - name: "SpacyNLP"
+    model: "en_core_web_md"
+    case_sensitive: False
+
+  # Tokeniser
+  - name: SpacyTokenizer
+
+  # Featurisers
+  - name: SpacyFeaturizer           # for dense features
+  - name: CountVectorsFeaturizer    # for sparse features, word analyzer 
+  - name: CountVectorsFeaturizer    # for sparse features, char analyzer
+    analyzer: "char_wb"
+    min_ngram: 1
+    max_ngram: 4
+
+  # Intent Classifier
+  - name: DIETClassifier
+    epochs: 300
+    constrain_similarities: true
+    model_confidence: linear_norm
+
+
+
+# Configuration for Rasa Core.
+# https://rasa.com/docs/rasa/core/policies/
+policies:
+  - name: RulePolicy
+  
+  - name: MemoizationPolicy
+    max_history: 20
+
+  - name: TEDPolicy
+    max_history: 20
+    epochs: 100
+    split_entities_by_comma: false
+    constrain_similarities: true
+    model_confidence: linear_norm
